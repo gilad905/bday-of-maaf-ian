@@ -76,7 +76,7 @@ function win() {
   document.querySelector("#gifs").style.visibility = "visible";
 }
 
-function drawScore() {
+function updateScore() {
   const scoreText = `Score: ${score}/${totalScore}`;
   document.querySelector("#score").innerText = scoreText;
   if (score === totalScore) {
@@ -87,25 +87,24 @@ function drawScore() {
 function drawAll() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   images.forEach((img) => img.draw());
-  drawScore();
 }
 
 function onDragStart(dragObj) {
-  const { clientX, clientY } = dragObj;
+  const { pageX, pageY } = dragObj;
   images.forEach((img) => {
-    if (img.draggable && img.isMouseOver(clientX, clientY)) {
+    if (img.draggable && img.isMouseOver(pageX, pageY)) {
       draggingImage = img;
-      offsetX = clientX - img.x;
-      offsetY = clientY - img.y;
+      offsetX = pageX - img.x;
+      offsetY = pageY - img.y;
     }
   });
 }
 
 function onDrag(dragObj) {
-  const { clientX, clientY } = dragObj;
   if (draggingImage) {
-    draggingImage.x = clientX - offsetX;
-    draggingImage.y = clientY - offsetY;
+    const { pageX, pageY } = dragObj;
+    draggingImage.x = pageX - offsetX;
+    draggingImage.y = pageY - offsetY;
     drawAll();
   }
 }
@@ -113,12 +112,11 @@ function onDrag(dragObj) {
 function onDragEnd() {
   if (draggingImage) {
     const { name, x, y, target } = draggingImage;
-    console.log(`${name}: { x: ${x}, y: ${y} },`);
+    // console.log(`${name}: { x: ${x}, y: ${y} },`);
     if (target) {
       const dx = x - target.x;
       const dy = y - target.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      // console.log(name, "distance", distance);
       if (distance < snapDistance) {
         draggingImage.x = target.x;
         draggingImage.y = target.y;
@@ -132,7 +130,7 @@ function onDragEnd() {
           drawAll();
         }, 1000);
         score += 1;
-        // console.log(name, "snapped");
+        updateScore();
       }
     }
     drawAll();
@@ -176,5 +174,6 @@ function init() {
 }
 
 init();
+updateScore();
 
 window.win = win;
