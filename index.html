@@ -3,14 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <title>Birthday Of Maaf-Ian</title>
 </head>
 
 <body>
   <main>
+    <div id="score"></div>
     <canvas id="canvas" width="900" height="1200"></canvas>
-    <div class="gifs">
+    <div id="gifs">
       <img src="./assets/gifs/Excited Happy Birthday GIF by Mickey Mouse.gif">
       <img src="./assets/gifs/Fireworks Diwali GIF.gif">
       <img src="./assets/gifs/Happy Birthday Dog GIF by Lucas and Friends by RV AppStudios.gif">
@@ -21,10 +22,25 @@
     </div>
     <style>
       body {
+        width: 900px;
+        height: 1200px;
         margin: 0;
         padding: 0;
       }
-      .gifs {
+
+      #score {
+        position: absolute;
+        width: 900px;
+        font-size: 80px;
+        font-weight: bold;
+        color: green;
+        font-family: arial;
+        text-align: center;
+      }
+
+      #gifs {
+        width: 900px;
+        height: 1200px;
         visibility: hidden;
         background: linear-gradient(135deg, #ff9a9e 0%, green, blue, red);
         position: absolute;
@@ -35,7 +51,7 @@
         width: 100vw;
       }
 
-      .gifs * {
+      #gifs * {
         max-width: 300px;
       }
     </style>

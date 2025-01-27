@@ -9,7 +9,7 @@ const ctx = canvas.getContext("2d");
 const images = [];
 const zoom = 0.5;
 const snapDistance = 50;
-const nonTextAnchor = { x: 0, y: 400 };
+const nonTextAnchor = { x: 0, y: 420 };
 // const drawAtTargets = true;
 const drawAtTargets = false;
 let draggingImage = null;
@@ -73,23 +73,12 @@ class DraggableImage {
 }
 
 function win() {
-  document.querySelector(".gifs").style.visibility = "visible";
+  document.querySelector("#gifs").style.visibility = "visible";
 }
 
 function drawScore() {
   const scoreText = `Score: ${score}/${totalScore}`;
-  const fontSize = 40;
-  ctx.font = `bold ${fontSize}px Arial`;
-  ctx.fillStyle = "green";
-  const textWidth = ctx.measureText(scoreText).width;
-  const x = 300;
-  const y = fontSize;
-
-  ctx.fillStyle = "white";
-  // ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  ctx.fillRect(x - 10, y - fontSize, textWidth + 20, fontSize + 10);
-  ctx.fillStyle = "green";
-  ctx.fillText(scoreText, x, y);
+  document.querySelector("#score").innerText = scoreText;
   if (score === totalScore) {
     win();
   }
@@ -124,7 +113,7 @@ function onDrag(dragObj) {
 function onDragEnd() {
   if (draggingImage) {
     const { name, x, y, target } = draggingImage;
-    // console.log(`${name}: { x: ${x}, y: ${y} },`);
+    console.log(`${name}: { x: ${x}, y: ${y} },`);
     if (target) {
       const dx = x - target.x;
       const dy = y - target.y;
@@ -187,3 +176,5 @@ function init() {
 }
 
 init();
+
+window.win = win;

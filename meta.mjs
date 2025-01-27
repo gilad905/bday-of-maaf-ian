@@ -17,9 +17,9 @@ export const images = {
 };
 
 export const texts = {
-  happy: { x: 435, y: 532, target: { x: 26, y: 83 } },
-  birth: { x: 388, y: 417, target: { x: 376, y: 92 } },
-  hday: { x: 426, y: 309, target: { x: 644, y: 91 } },
-  to: { x: 69, y: 498, target: { x: 24, y: 206 } },
-  maafan: { x: 33, y: 397, target: { x: 393, y: 207 } },
+  happy: { x: 69, y: 722, target: { x: 26, y: 150 } },
+  birth: { x: 543, y: 457, target: { x: 376, y: 160 } },
+  hday: { x: 121, y: 422, target: { x: 644, y: 160 } },
+  to: { x: 403, y: 898, target: { x: 24, y: 260 } },
+  maafan: { x: 169, y: 576, target: { x: 393, y: 260 } },
 };
