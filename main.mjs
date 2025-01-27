@@ -101,7 +101,8 @@ function drawAll() {
   drawScore();
 }
 
-canvas.addEventListener("pointerdown", (e) => {
+canvas.addEventListener("touchstart", (e) => {
+  e = e.touches[0];
   const mouseX = e.clientX;
   const mouseY = e.clientY;
   images.forEach((img) => {
@@ -113,7 +114,8 @@ canvas.addEventListener("pointerdown", (e) => {
   });
 });
 
-canvas.addEventListener("pointermove", (e) => {
+canvas.addEventListener("touchmove", (e) => {
+  e = e.touches[0];
   if (draggingImage) {
     draggingImage.x = e.clientX - offsetX;
     draggingImage.y = e.clientY - offsetY;
@@ -121,7 +123,8 @@ canvas.addEventListener("pointermove", (e) => {
   }
 });
 
-canvas.addEventListener("pointerup", () => {
+canvas.addEventListener("touchend", () => {
+  e = e.touches[0];
   if (draggingImage) {
     const { name, x, y, target } = draggingImage;
     console.log(`${name}: { x: ${x}, y: ${y} },`);
