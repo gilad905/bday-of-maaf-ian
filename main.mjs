@@ -101,33 +101,30 @@ function drawAll() {
   drawScore();
 }
 
-canvas.addEventListener("touchstart", (e) => {
-  e = e.touches[0];
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
+function onDragStart(dragObj) {
+  const { clientX, clientY } = dragObj;
   images.forEach((img) => {
-    if (img.isMouseOver(mouseX, mouseY) && img.draggable) {
+    if (img.draggable && img.isMouseOver(clientX, clientY)) {
       draggingImage = img;
-      offsetX = mouseX - img.x;
-      offsetY = mouseY - img.y;
+      offsetX = clientX - img.x;
+      offsetY = clientY - img.y;
     }
   });
-});
+}
 
-canvas.addEventListener("touchmove", (e) => {
-  e = e.touches[0];
+function onDrag(dragObj) {
+  const { clientX, clientY } = dragObj;
   if (draggingImage) {
-    draggingImage.x = e.clientX - offsetX;
-    draggingImage.y = e.clientY - offsetY;
+    draggingImage.x = clientX - offsetX;
+    draggingImage.y = clientY - offsetY;
     drawAll();
   }
-});
+}
 
-canvas.addEventListener("touchend", () => {
-  e = e.touches[0];
+function onDragEnd() {
   if (draggingImage) {
     const { name, x, y, target } = draggingImage;
-    console.log(`${name}: { x: ${x}, y: ${y} },`);
+    // console.log(`${name}: { x: ${x}, y: ${y} },`);
     if (target) {
       const dx = x - target.x;
       const dy = y - target.y;
@@ -152,13 +149,21 @@ canvas.addEventListener("touchend", () => {
     drawAll();
   }
   draggingImage = null;
-});
+}
 
 function flashImage(image) {
   ctx.strokeStyle = image.flashI % 2 === 0 ? "red" : "yellow";
   image.flashI += 1;
   ctx.lineWidth = 5;
   ctx.strokeRect(image.x, image.y, image.width, image.height);
+}
+
+function getTouchListener(listener) {
+  return function (ev) {
+    ev.preventDefault();
+    const touch = ev.touches[0];
+    listener(touch);
+  };
 }
 
 function init() {
@@ -172,6 +177,13 @@ function init() {
     const path = `./assets/${name}.png`;
     images.push(new DraggableImage(name, meta.texts[name], path, true));
   }
+
+  canvas.addEventListener("touchstart", getTouchListener(onDragStart));
+  canvas.addEventListener("touchmove", getTouchListener(onDrag));
+  canvas.addEventListener("touchend", onDragEnd);
+  canvas.addEventListener("mousedown", onDragStart);
+  canvas.addEventListener("mousemove", onDrag);
+  canvas.addEventListener("mouseup", onDragEnd);
 }
 
 init();
