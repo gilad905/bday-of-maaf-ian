@@ -101,7 +101,7 @@ function drawAll() {
   drawScore();
 }
 
-canvas.addEventListener("mousedown", (e) => {
+canvas.addEventListener("pointerdown", (e) => {
   const mouseX = e.clientX;
   const mouseY = e.clientY;
   images.forEach((img) => {
@@ -113,7 +113,7 @@ canvas.addEventListener("mousedown", (e) => {
   });
 });
 
-canvas.addEventListener("mousemove", (e) => {
+canvas.addEventListener("pointermove", (e) => {
   if (draggingImage) {
     draggingImage.x = e.clientX - offsetX;
     draggingImage.y = e.clientY - offsetY;
@@ -121,7 +121,7 @@ canvas.addEventListener("mousemove", (e) => {
   }
 });
 
-canvas.addEventListener("mouseup", () => {
+canvas.addEventListener("pointerup", () => {
   if (draggingImage) {
     const { name, x, y, target } = draggingImage;
     console.log(`${name}: { x: ${x}, y: ${y} },`);
